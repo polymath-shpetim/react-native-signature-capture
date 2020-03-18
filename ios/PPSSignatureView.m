@@ -37,10 +37,12 @@ static inline void addVertex(uint *length, PPSSignaturePoint v) {
 	}
 	
 	GLvoid *data = glMapBufferOES(GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES);
-	memcpy(data + sizeof(PPSSignaturePoint) * (*length), &v, sizeof(PPSSignaturePoint));
-	glUnmapBufferOES(GL_ARRAY_BUFFER);
-	
-	(*length)++;
+	if (data) {
+		memcpy(data + sizeof(PPSSignaturePoint) * (*length), &v, sizeof(PPSSignaturePoint));
+		glUnmapBufferOES(GL_ARRAY_BUFFER);
+		
+		(*length)++;
+	}
 }
 
 static inline CGPoint QuadraticPointInCurve(CGPoint start, CGPoint end, CGPoint controlPoint, float percent) {
